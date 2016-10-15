@@ -5,11 +5,11 @@ class ClienteMicroservico < Microservicos
   end
 
   def ler_cliente(id_recurso)
-    return trata_resposta(ler_recurso(id_recurso))
+    return trata_resposta_cliente(ler_recurso(id_recurso))
   end
 
   def ler_clientes()
-    return trata_resposta(ler_recursos)
+    return trata_resposta_clientes(ler_recursos)
   end
 
   def apagar_cliente(id_recurso)
@@ -21,29 +21,39 @@ class ClienteMicroservico < Microservicos
   end
 
   def atualizar_cliente(recurso)
-    resposta = atualizar_recurso(recurso)
+    resposta = atualizar_recurso(recurso[:id], {:cliente => recurso})
   end
 
-  def trata_resposta(resposta)
+  def trata_resposta_cliente(resposta)
     if resposta.code == 200
-      return trata_resposta_cliente(resposta.parse())
+      return cria_cliente(resposta.parse())
     else
       return []
     end
   end
 
-  def  trata_resposta_cliente(resposta)
-    clientes = []
-    i = 0
-    for cliente in resposta
-      novo = Cliente.new(nome: cliente['nome'], cpf: cliente['cpf'],
-                         email: cliente['email'], rua: cliente['rua'],
-                         numero: cliente['numero'], bairro: cliente['bairro'],
-                         cidade: cliente['cidade'], estado: cliente['estado'],
-                         cep: cliente['cep'])
-      clientes[i] = novo
-      i+=1
+  def  trata_resposta_clientes(resposta)
+    if resposta.code == 200
+      resposta = resposta.parse()
+      clientes = []
+      i = 0
+      for cliente in resposta
+        novo = cria_cliente(cliente)
+        clientes[i] = novo
+        i+=1
+      end
+      return clientes
+    else
+      return []
     end
-    return clientes
+  end
+
+  private
+  def cria_cliente(dados)
+    return novo = Cliente.new(id:dados['id'], nome: dados['nome'], cpf: dados['cpf'],
+                       email: dados['email'], rua: dados['rua'],
+                       numero: dados['numero'], bairro: dados['bairro'],
+                       cidade: dados['cidade'], estado: dados['estado'],
+                       cep: dados['cep'])
   end
 end
