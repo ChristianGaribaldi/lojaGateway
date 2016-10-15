@@ -13,15 +13,33 @@ class ClienteMicroservico < Microservicos
   end
 
   def apagar_cliente(id_recurso)
-    return resposta = apagar_recurso(id_recurso)
+    resposta = apagar_recurso(id_recurso)
+    # Código NO_CONTENT= 204
+    if resposta.code = 204
+      true
+    else
+      false
+    end
   end
 
   def criar_cliente(novo_recurso)
     resposta = criar_recurso({:cliente => novo_recurso})
+    # Código CREATED = 201
+    if resposta.code = 201
+      true
+    else
+      false
+    end
   end
 
   def atualizar_cliente(recurso)
     resposta = atualizar_recurso(recurso[:id], {:cliente => recurso})
+    # Código NO_CONTENT= 204
+    if resposta.code = 204
+      true
+    else
+      false
+    end
   end
 
   def trata_resposta_cliente(resposta)
