@@ -1,5 +1,4 @@
-require 'microservicos'
-
+require 'cliente_microservico'
 class ClientesController < ApplicationController
   before_action :set_cliente, only: [:show, :edit, :update, :destroy]
   before_action :set_estados, only: [:new,:edit,:create]
@@ -8,7 +7,6 @@ class ClientesController < ApplicationController
   # GET /clientes.json
   def index
     cliente_microservico = ClienteMicroservico.new
-    @clientes = []
     @clientes = cliente_microservico.ler_clientes
   end
 
@@ -30,9 +28,9 @@ class ClientesController < ApplicationController
   # POST /clientes.json
   def create
     @cliente = Cliente.new(cliente_params)
-
+    cliente_microservico = ClienteMicroservico.new
     respond_to do |format|
-      if @cliente.save
+      if cliente_microservico.criar_cliente(@cliente)
         format.html { redirect_to lojas_url, notice: 'Cliente criado com sucesso!' }
         format.json { render :show, status: :created, location: @cliente }
       else
@@ -45,8 +43,13 @@ class ClientesController < ApplicationController
   # PATCH/PUT /clientes/1
   # PATCH/PUT /clientes/1.json
   def update
+    cliente_microservico = ClienteMicroservico.new
+    id = @cliente.id
+    cliente_atualizado = Cliente.new(cliente_params)
+    cliente_atualizado.id = id
+
     respond_to do |format|
-      if @cliente.update(cliente_params)
+      if cliente_microservico.atualizar_cliente(cliente_atualizado)
         format.html { redirect_to lojas_url, notice: 'Cliente atualizado com sucesso!' }
         format.json { render :show, status: :ok, location: @cliente }
       else
@@ -59,10 +62,12 @@ class ClientesController < ApplicationController
   # DELETE /clientes/1
   # DELETE /clientes/1.json
   def destroy
-    @cliente.destroy
-    respond_to do |format|
-      format.html { redirect_to lojas_url, notice: 'Cliente removido com sucesso!.' }
-      format.json { head :no_content }
+    cliente_microservico = ClienteMicroservico.new
+    if cliente_microservico.apagar_cliente(@cliente.id)
+      respond_to do |format|
+        format.html { redirect_to lojas_url, notice: 'Cliente removido com sucesso!' }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -73,7 +78,9 @@ class ClientesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_cliente
-    @cliente = Cliente.find(params[:id])
+    id = params[:id]
+    cliente_microservico = ClienteMicroservico.new
+    @cliente = cliente_microservico.ler_cliente(id)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
