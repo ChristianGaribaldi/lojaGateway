@@ -1,0 +1,41 @@
+<!-- Página Principal do Sistema -->
+
+<div class="container-fluid">
+  <div class="row">
+    <% if !notice.nil? %>
+        <div class="alert alert-success" role="alert">
+          <div class="h3" id="notice">
+            <%= notice %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-1 main">
+      <div class="jumbotron">
+        <h1>Loja Virtual Z </h1>
+        <p> Escolha a ação a ser realizada: </p>
+      </div>
+      <div class="col-md-4 list-group">
+        <p class="list-group-item active"> <b>Clientes </b> </p>
+        <%= link_to 'Cadastrar', new_cliente_path, class:"list-group-item" %>
+        <%= link_to 'Listar Todos', clientes_path, class:"list-group-item" %>
+
+      </div>
+
+      <div class="col-md-4 list-group">
+        <p class="list-group-item active"> <b>Produtos </b>  </p>
+        <%= link_to 'Cadastrar', new_produto_path, class:"list-group-item" %>
+        <%= link_to 'Listar Todos', produtos_path, class:"list-group-item" %>
+
+      </div>
+
+      <div class="col-md-4 list-group">
+        <p class="list-group-item active"> <b> Vendas </b>  </p>
+        <%= link_to 'Efetuar Nova Venda', new_venda_path, class:"list-group-item" %>
+        <%= link_to 'Relatório de Vendas', vendas_path, class:"list-group-item" %>
+      </div>
+    </div>
+  </div>
+</div>

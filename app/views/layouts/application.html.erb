@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="br">
+<meta charset="UTF-8"/>
+<head>
+  <title>Loja Virtual Z</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="<%= lojas_url %>">Loja Virtual Z</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <!--li><a href="EntendaMelhor.html">Ajuda</a></li-->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<%= yield %>
+</body>
+</html>
+
+

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="page-header">
+        <h3><strong>Ver Cliente</strong></h3>
+      </div>
+      <h4>
+        <strong>Nome:</strong> <%= @cliente.nome %>
+        <br/><br/>
+
+        <strong>CPF:</strong><%= @cliente.cpf %>
+        <br/><br/>
+
+        <strong>Email:</strong> <%= @cliente.email %>
+        <br/><br/>
+
+        <strong>Endereço:</strong>
+        &nbsp; <%= @cliente.rua %> <%= @cliente.numero %>&nbsp;-&nbsp;<%= @cliente.bairro %>
+        (<%= @cliente.cidade %>&nbsp;/&nbsp;<%= @cliente.estado %>)
+        <br/><br/>
+
+      </h4>
+      <br/>
+      <%= link_to 'Voltar', clientes_path, class: 'btn btn-default btn-block', role:'button' %>
+    </div>
+  </div>
+</div>
+

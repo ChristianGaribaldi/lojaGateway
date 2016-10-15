@@ -1,0 +1,2 @@
+json.extract! venda, :id, :produto_id, :cliente_id, :quantidade, :valorVenda, :tipo_pgt, :num_cartao, :validade_cartao, :codigo_cartao, :desconto, :created_at, :updated_at
+json.url venda_url(venda, format: :json)

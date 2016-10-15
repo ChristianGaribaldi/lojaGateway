@@ -1,0 +1,30 @@
+<script>
+  $( document ).ready(function() {
+    $( "#cliente_cep" ).change(function() {
+      atualizaEndereco();
+    });
+
+    $("#cliente_estado").change(function(){
+      var rua = $("#cliente_rua").val();
+      var bairro = $("#cliente_bairro").val();
+      var cidade = $("#cliente_cidade").val();
+      var estado = $("#cliente_estado").val();
+      busca_cep(rua,bairro, cidade, estado);
+    });
+  });
+</script>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="page-header">
+        <h3><strong>Editar Cliente</strong></h3>
+      </div>
+      <%= render 'form' %>
+      <br/>
+      <%= link_to 'Voltar', clientes_path, class: 'btn btn-default btn-block', role:'button' %>
+    </div>
+  </div>
+</div>
+
+

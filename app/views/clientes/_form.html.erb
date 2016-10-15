@@ -1,0 +1,89 @@
+<%= form_for(@cliente) do |f| %>
+    <% if @cliente.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@cliente.errors.count, "error") %> impedem o salvamento desse cadastro:</h2>
+          <ul>
+            <% @cliente.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :nome %><br>
+      <%= f.text_field :nome, class: "form-control", placeholder: "Nome", required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :cpf, 'CPF' %><br>
+      <%= f.text_field :cpf, class: "form-control", placeholder: "123456789", maxlength: 11, required: true %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :email %><br>
+      <%= f.email_field :email, class: "form-control", placeholder: "Email", required: true %>
+    </div>
+
+    <div class="form-inline">
+      <%= f.label :cep, 'CEP' %><br/>
+      <%= f.text_field :cep, class: "form-control",placeholder:'00000000', maxlength: 8, required: true  %>
+    </div>
+    <br/>
+
+    <div class="painelEndereco panel panel-success">
+      <div class="panel-heading">
+        <b>Endereço</b>
+      </div>
+      <div class="panel-body form-inline">
+        <div class="col-md-4 form-group">
+          <%= f.label :rua %><br>
+          <%= f.text_field :rua, class: "form-control", placeholder: "", required: true %>
+        </div>
+        <div class="col-md-4 form-group">
+          <%= f.label :numero %><br>
+          <%= f.text_field :numero, class: "form-control", placeholder: "", required: true %>
+        </div>
+        <div class="col-md-4 form-group">
+          <%= f.label :bairro %><br>
+          <%= f.text_field :bairro, class: "form-control", placeholder: "", required: true %>
+        </div>
+        <div class="col-md-4 form-group">
+          <%= f.label :cidade %><br>
+          <%= f.text_field :cidade, class: "form-control", placeholder: "", required: true %>
+        </div>
+
+        <div class="col-md-4 form-group">
+          <%= f.label :estado %><br>
+          <%= f.select("estado", options_from_collection_for_select(@estados, 'sigla', 'nome'), { include_blank: true }, class: "form-control", placeholder: "Estado", required: true) %>
+        </div>
+      </div>
+    </div>
+
+    <!--<div class="form-group">-->
+    <!--<label for="InputLogin">Login</label>-->
+    <!--<input type="text" class="form-control" id="InputLogin" name="Login" placeholder="Login" required>-->
+    <!--</div>-->
+
+    <!--<div class="form-group">-->
+    <!--<label for="InputPassword">Senha</label>-->
+    <!--<input type="password" class="form-control" id="InputPassword"name="Senha" placeholder="Senha" required>-->
+    <!--</div>-->
+
+    <%= f.submit "Salvar", class: "btn btn-primary btn-block" %>
+    <!--input name="Save" class="btn btn-primary btn-block" type="submit" value="Salvar" /-->
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

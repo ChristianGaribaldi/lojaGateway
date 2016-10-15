@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Produto:</strong>
+  <%= @venda.produto_id %>
+</p>
+
+<p>
+  <strong>Cliente:</strong>
+  <%= @venda.cliente_id %>
+</p>
+
+<p>
+  <strong>Quantidade:</strong>
+  <%= @venda.quantidade %>
+</p>
+
+<p>
+  <strong>Valorvenda:</strong>
+  <%= @venda.valorVenda %>
+</p>
+
+<p>
+  <strong>Tipo pgt:</strong>
+  <%= @venda.tipo_pgt %>
+</p>
+
+<p>
+  <strong>Num cartao:</strong>
+  <%= @venda.num_cartao %>
+</p>
+
+<p>
+  <strong>Validade cartao:</strong>
+  <%= @venda.validade_cartao %>
+</p>
+
+<p>
+  <strong>Codigo cartao:</strong>
+  <%= @venda.codigo_cartao %>
+</p>
+
+<p>
+  <strong>Desconto:</strong>
+  <%= @venda.desconto %>
+</p>
+
+<%= link_to 'Edit', edit_venda_path(@venda) %> |
+<%= link_to 'Back', vendas_path %>
