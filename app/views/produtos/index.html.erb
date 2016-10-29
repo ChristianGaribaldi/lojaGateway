@@ -1,33 +1,41 @@
-<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="page-header">
+        <h3><strong>Listagem de Produtos</strong></h3>
+      </div>
+      <% if @produtos.length > 0 %>
+          <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Descrição</th>
+              <th>Preço Unitário</th>
+              <th>Quantidade Estoque</th>
+              <th colspan="3"></th>
+            </tr>
+            </thead>
 
-<h1>Listing Produtos</h1>
+            <tbody>
+            <% for produto in @produtos %>
+                <tr>
+                  <td><%= produto.nome %></td>
+                  <td><%= produto.descricao %></td>
+                  <td>R$ <%= produto.precoUnitario %></td>
+                  <td><%= produto.qtd_estoque%></td>
+                  <td><%= link_to 'Ver', produto_path(produto),  class:'btn btn-info', role:'button'  %></td>
+                  <td><%= link_to 'Editar', edit_produto_path(produto),  class:'btn btn-warning', role:'button' %></td>
+                  <td><%= link_to 'Apagar', produto_path(produto), method: :delete, data: { confirm: 'Você tem certeza?' },  class:'btn btn-danger', role:'button' %></td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+      <% else %>
+          <div class="alert alert-info" role="alert">Ainda não há Produtos cadastrados!</div>
+      <% end %>
+      <br/>
+      <%= link_to 'Voltar', lojas_path, class: 'btn btn-default btn-block', role:'button' %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>Descricao</th>
-      <th>Precounitario</th>
-      <th>Qtd estoque</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @produtos.each do |produto| %>
-      <tr>
-        <td><%= produto.nome %></td>
-        <td><%= produto.descricao %></td>
-        <td><%= produto.precoUnitario %></td>
-        <td><%= produto.qtd_estoque %></td>
-        <td><%= link_to 'Show', produto %></td>
-        <td><%= link_to 'Edit', edit_produto_path(produto) %></td>
-        <td><%= link_to 'Destroy', produto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Produto', new_produto_path %>
+    </div>
+  </div>
+</div>

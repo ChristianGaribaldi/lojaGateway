@@ -1,5 +1,15 @@
-<h1>New Produto</h1>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="page-header">
+        <h3><strong>Cadastro de Produto</strong></h3>
+      </div>
+      <%= render 'form' %>
+      <br/>
+      <%= link_to 'Voltar', lojas_path, class: 'btn btn-default btn-block', role:'button' %>
+    </div>
+  </div>
+</div>
 
-<%= render 'form' %>
 
-<%= link_to 'Back', produtos_path %>
+

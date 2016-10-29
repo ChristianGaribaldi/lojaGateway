@@ -1,6 +1,46 @@
-<h1>Editing Produto</h1>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="page-header">
+        <h3><strong>Editar Produto</strong></h3>
+      </div>
+      <%= form_for(@produto, url: produto_url, method: :patch) do |f| %>
+          <% if @produto.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@produto.errors.count, "error") %> impedem o salvamento desse cadastro:</h2>
 
-<%= render 'form' %>
+                <ul>
+                  <% @produto.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+          <% end %>
 
-<%= link_to 'Show', @produto %> |
-<%= link_to 'Back', produtos_path %>
+          <div class="form-group">
+            <%= f.label :nome %><br>
+            <%= f.text_field :nome, class: "form-control", placeholder: "Nome", required: true %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :descricao, 'Descrição' %><br>
+            <%= f.text_field :descricao, class: "form-control", placeholder: "Descrição", required: true %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :precoUnitario, 'Preço Unitário (R$)' %><br>
+            <%= f.number_field :precoUnitario, class: "form-control", min: 1,step: 0.10, required: true %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :qtd_estoque, 'Quantidade Estoque' %><br>
+            <%= f.number_field :qtd_estoque, class: "form-control", min: 1, required: true %>
+          </div>
+          <%= f.submit "Salvar", class: "btn btn-primary btn-block" %>
+      <% end %>
+
+      <br/>
+      <%= link_to 'Voltar', produtos_path, class: 'btn btn-default btn-block', role:'button' %>
+    </div>
+  </div>
+</div>
