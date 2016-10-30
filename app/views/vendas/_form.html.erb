@@ -1,53 +1,132 @@
-<%= form_for(@venda) do |f| %>
-  <% if @venda.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@venda.errors.count, "error") %> prohibited this venda from being saved:</h2>
-
-      <ul>
-      <% @venda.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<div class="container-fluid">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="page-header">
+      <h3><strong>Efetuar Venda</strong></h3>
     </div>
-  <% end %>
+    <% if @produtos.length > 0 && @clientes.length > 0 %>
+        <%= form_for(@venda) do |f| %>
+            <% if @venda.errors.any? %>
+                <div class="alert alert-danger" role="alert">
+                  <ul>
+                    <% @venda.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+            <% end %>
 
-  <div class="field">
-    <%= f.label :produto_id %><br>
-    <%= f.number_field :produto_id %>
+            <div class="form-group">
+              <%= f.label :cliente_id %>
+              <%= f.select("cliente_id", options_from_collection_for_select(@clientes, 'id', 'nome'), { include_blank: true }, class: "form-control",  required: true)%>
+            </div>
+
+            <!--PANEL DE PRODUTOS EM ESTOQUE-->
+            <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-heading" style="background-color: #eea236">
+                  <strong>   Produtos em Estoque </strong>
+                </div>
+                <table id="tabela_estoque" class="table table-bordered">
+                  <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Unidade(R$)</th>
+                    <th>Estoque</th>
+                    <th colspan="1"></th>
+                  </tr>
+                  </thead>
+
+                  <tbody>
+                  <% for produto in @produtos %>
+                      <tr id="linha_estoque_<%=produto.id%>">
+                        <td class="nome"><%= produto.nome%> </td>
+                        <td class="preco"><%= produto.precoUnitario%></td>
+                        <td class="qtd"><%= produto.qtd_estoque%></td>
+                        <td>
+                          <button id="bt_add_<%=produto.id%>" value="<%=produto.id%>" class="btn btn-default btn-sm" style="background-color: #31b0d5">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                          </button>
+                        </td>
+                      </tr>
+                  <% end %>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!--FIM PANEL DE PRODUTOS EM ESTOQUE-->
+
+            <!--2 Panel de Carrinho-->
+            <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-heading"  style="background-color: #67b168">
+                  <strong> Carrinho </strong></div>
+                <table id="tabela_carrinho" class="table table-bordered">
+                  <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Unidade(R$)</th>
+                    <th>Quantidade</th>
+                    <th colspan="1"></th>
+                  </tr>
+                  </thead>
+                  <tbody class="lista_carrinho">
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- FIM Panel de Carrinho-->
+
+            <div class="well col-md-12">
+              <!-- Seção de Pagamento-->
+              <div class="col-md-6">
+                <div class="h5"><strong>Forma de Pagamento:</strong>
+                  <label class="radio-inline opcao_dinheiro">
+                    <input type="radio" name="opcaoPgt" id="opt_dinheiro" value="Dinheiro" checked>
+                    Dinheiro
+                  </label>
+                  <label class="radio-inline opcao_cartao">
+                    <input type="radio" name="opcaoPgt" id="opt_cartao" value="Cartao">
+                    Cartão
+                  </label>
+                </div>
+
+                <!-- Dados do Cartão-->
+                <div class="input-group col-md-11 dados_cartao">
+                  <span class="input-group-addon" id="num_cartao">Número </span>
+                  <input type="text" name="venda[num_cartao]" class="form-control" maxlength="16" placeholder="0000000000000" aria-describedby="num_cartao">
+                </div>
+                <div class="input-group col-md-11 dados_cartao">
+                  <span class="input-group-addon" id="valid_cartao">Validade </span>
+                  <input type="text" name="venda[valid_cartao]" maxlength="5" class="form-control" placeholder="00/00" aria-describedby="valid_cartao">
+
+                  <span class="input-group-addon" id="cvv_cartao">CVV </span>
+                  <input type="text" name="venda[cvv_cartao]" maxlength="3" class="form-control" placeholder="000" aria-describedby="cvv_cartao">
+                </div>
+                <!-- Fim Dados do Cartão-->
+              </div>
+              <!--Fim Seção de Pagamento-->
+
+              <!--Seção Desconto e ValorTotal-->
+              <div class="col-md-6">
+                <div class="input-group col-md-6">
+                  <span class="input-group-addon" id="basic-addon1">Desconto %</span>
+                  <input type="number" id="desconto" name="venda[desconto]" class="form-control" placeholder="0" min="0" max="100" step="10" aria-describedby="basic-addon1">
+                </div>
+                <div class="h3">
+                  <strong> Valor Total: </strong> R$ <span id="valor_total"> 150 </span>
+                </div>
+              </div>
+              <!--Fim Seção Desconto e ValorTotal-->
+
+            </div>
+            <%= f.submit "Concluir Compra", class: "btn btn-primary btn-block" %>
+        <% end %>
+    <% else %>
+        <div class="alert alert-info" role="alert">Ainda não há Clientes/Produtos cadastrados para realizar uma Venda!</div>
+    <% end %>
+    <br/>
+    <%= link_to 'Voltar', lojas_path, class: 'btn btn-default btn-block', role:'button' %>
   </div>
-  <div class="field">
-    <%= f.label :cliente_id %><br>
-    <%= f.number_field :cliente_id %>
-  </div>
-  <div class="field">
-    <%= f.label :quantidade %><br>
-    <%= f.number_field :quantidade %>
-  </div>
-  <div class="field">
-    <%= f.label :valorVenda %><br>
-    <%= f.text_field :valorVenda %>
-  </div>
-  <div class="field">
-    <%= f.label :tipo_pgt %><br>
-    <%= f.text_field :tipo_pgt %>
-  </div>
-  <div class="field">
-    <%= f.label :num_cartao %><br>
-    <%= f.text_field :num_cartao %>
-  </div>
-  <div class="field">
-    <%= f.label :validade_cartao %><br>
-    <%= f.text_field :validade_cartao %>
-  </div>
-  <div class="field">
-    <%= f.label :codigo_cartao %><br>
-    <%= f.text_field :codigo_cartao %>
-  </div>
-  <div class="field">
-    <%= f.label :desconto %><br>
-    <%= f.text_field :desconto %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>

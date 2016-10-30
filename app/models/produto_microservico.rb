@@ -50,7 +50,7 @@ class ProdutoMicroservico < Microservicos
     end
   end
 
-  def  trata_resposta_produtos(resposta)
+  def trata_resposta_produtos(resposta)
     if resposta.code == 200
       resposta = resposta.parse()
       produtos = []

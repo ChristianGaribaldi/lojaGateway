@@ -1,43 +1,35 @@
-<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="page-header">
+        <h3><strong>Relatório de Vendas</strong></h3>
+      </div>
+      <% if @hash_produtos_vendidos.values.length > 0 %>
+          <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+              <th>Produto Vendido</th>
+              <th>Quantidade Total Vendida</th>
+              <th>Valor Total</th>
+            </tr>
+            </thead>
 
-<h1>Listing Vendas</h1>
+            <tbody>
+            <% @hash_produtos_vendidos.values.each do |produto_vendido| %>
+                <tr>
+                  <td><%= produto_vendido %></td>
+                  <td><%= @hash_qtd_total[produto_vendido] %></td>
+                  <td>R$ <%= @hash_valor_total[produto_vendido]%></td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+      <% else %>
+          <div class="alert alert-info" role="alert">Ainda não há Vendas realizadas!</div>
+      <%end%>
 
-<table>
-  <thead>
-    <tr>
-      <th>Produto</th>
-      <th>Cliente</th>
-      <th>Quantidade</th>
-      <th>Valorvenda</th>
-      <th>Tipo pgt</th>
-      <th>Num cartao</th>
-      <th>Validade cartao</th>
-      <th>Codigo cartao</th>
-      <th>Desconto</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @vendas.each do |venda| %>
-      <tr>
-        <td><%= venda.produto_id %></td>
-        <td><%= venda.cliente_id %></td>
-        <td><%= venda.quantidade %></td>
-        <td><%= venda.valorVenda %></td>
-        <td><%= venda.tipo_pgt %></td>
-        <td><%= venda.num_cartao %></td>
-        <td><%= venda.validade_cartao %></td>
-        <td><%= venda.codigo_cartao %></td>
-        <td><%= venda.desconto %></td>
-        <td><%= link_to 'Show', venda %></td>
-        <td><%= link_to 'Edit', edit_venda_path(venda) %></td>
-        <td><%= link_to 'Destroy', venda, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Venda', new_venda_path %>
+      <br/>
+      <%= link_to 'Voltar', lojas_path, class: 'btn btn-default btn-block', role:'button' %>
+    </div>
+  </div>
+</div>
