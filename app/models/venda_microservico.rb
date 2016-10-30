@@ -28,7 +28,7 @@ class VendaMicroservico < Microservicos
     if resposta.code == 201
       true
     else
-      false
+      Hash(resposta.parse())
     end
   end
 

@@ -52,6 +52,7 @@ class VendasController < ApplicationController
 
     cont = 0
     erros = false
+    msgs = ''
     if !params[:venda][:produto_id].nil?
       for produto in params[:venda][:produto_id]
         produto_existente = ProdutoMicroservico.new.ler_produto(produto)
@@ -71,22 +72,17 @@ class VendasController < ApplicationController
           venda = Venda.new(cliente_id: cliente_id, produto_id: produto, quantidade: qtd, valorVenda: valor_venda,
                             tipo_pgt: opcao_pgt, desconto: desconto)
         end
-
         salvar = VendaMicroservico.new.criar_venda(venda)
-        if  !salvar #!venda.save
+        if  salvar != true
           erros = true
-          for msg in salvar.errors.full_messages
-            @venda.errors.add(:base, msg)
-          end
-        else
-          produto_existente.qtd_estoque -= qtd
-          ProdutoMicroservico.new.atualizar_produto(produto_existente)
+          @venda.errors.add(:base, salvar['base'].to_s.gsub('[','').gsub(']',''))
         end
         cont+= 1
       end
 
       respond_to do |format|
         if erros
+          # @venda.errors.add(:base, msgs)
           format.html { render :new }
         else
           format.html { redirect_to lojas_url, notice: 'Venda realizada com sucesso!' }
@@ -110,7 +106,7 @@ class VendasController < ApplicationController
     #   end
     # end
 
-  #
+    #
   end
 
   # PATCH/PUT /vendas/1
@@ -145,7 +141,7 @@ class VendasController < ApplicationController
 
   def set_produtos_clientes
     @clientes = ClienteMicroservico.new.ler_clientes
-    @produtos = ProdutoMicroservico.new.ler_produtos  # Produto.all.where("qtd_estoque > 0")
+    @produtos = ProdutoMicroservico.new.ler_produtos.find_all {|item| item.qtd_estoque > 0 }
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
