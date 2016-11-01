@@ -8,21 +8,21 @@ class VendasController < ApplicationController
   def index
     venda_microservico = VendaMicroservico.new
     vendas_totais = venda_microservico.ler_vendas
-    @hash_produtos_vendidos = {}
-    @hash_qtd_total = {}
-    @hash_valor_total = {}
+    @produtos_vendidos = {}
+    @qtd_total = {}
+    @valor_total = {}
 
     if !vendas_totais.empty?
       for venda in vendas_totais
-        if @hash_produtos_vendidos[venda.produto_id].nil?
+        if @produtos_vendidos[venda.produto_id].nil?
           produto = ProdutoMicroservico.new.ler_produto(venda.produto_id)
-          @hash_produtos_vendidos[venda.produto_id] = produto.nome
-          @hash_qtd_total[produto.nome] = venda.quantidade
-          @hash_valor_total[produto.nome] = venda.valorVenda
+          @produtos_vendidos[venda.produto_id] = produto.nome
+          @qtd_total[produto.nome] = venda.quantidade
+          @valor_total[produto.nome] = venda.valorVenda
         else
-          nome = @hash_produtos_vendidos[venda.produto_id]
-          @hash_qtd_total[nome] += venda.quantidade
-          @hash_valor_total[nome] += venda.valorVenda
+          nome = @produtos_vendidos[venda.produto_id]
+          @qtd_total[nome] += venda.quantidade
+          @valor_total[nome] += venda.valorVenda
         end
       end
     end
@@ -52,7 +52,6 @@ class VendasController < ApplicationController
 
     cont = 0
     erros = false
-    msgs = ''
     if !params[:venda][:produto_id].nil?
       for produto in params[:venda][:produto_id]
         produto_existente = ProdutoMicroservico.new.ler_produto(produto)
@@ -82,7 +81,6 @@ class VendasController < ApplicationController
 
       respond_to do |format|
         if erros
-          # @venda.errors.add(:base, msgs)
           format.html { render :new }
         else
           format.html { redirect_to lojas_url, notice: 'Venda realizada com sucesso!' }
@@ -93,20 +91,6 @@ class VendasController < ApplicationController
         format.html { render :new }
       end
     end
-    #
-    # @venda = Venda.new(venda_params)
-    #
-    # respond_to do |format|
-    #   if @venda.save
-    #     format.html { redirect_to @venda, notice: 'Venda was successfully created.' }
-    #     format.json { render :show, status: :created, location: @venda }
-    #   else
-    #     format.html { render :new }
-    #     format.json { render json: @venda.errors, status: :unprocessable_entity }
-    #   end
-    # end
-
-    #
   end
 
   # PATCH/PUT /vendas/1

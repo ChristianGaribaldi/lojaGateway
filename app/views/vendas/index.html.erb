@@ -4,7 +4,7 @@
       <div class="page-header">
         <h3><strong>Relatório de Vendas</strong></h3>
       </div>
-      <% if @hash_produtos_vendidos.values.length > 0 %>
+      <% if @produtos_vendidos.values.length > 0 %>
           <table class="table table-striped table-bordered">
             <thead>
             <tr>
@@ -15,11 +15,11 @@
             </thead>
 
             <tbody>
-            <% @hash_produtos_vendidos.values.each do |produto_vendido| %>
+            <% @produtos_vendidos.values.each do |produto_vendido| %>
                 <tr>
                   <td><%= produto_vendido %></td>
-                  <td><%= @hash_qtd_total[produto_vendido] %></td>
-                  <td>R$ <%= @hash_valor_total[produto_vendido]%></td>
+                  <td><%= @qtd_total[produto_vendido] %></td>
+                  <td>R$ <%= @valor_total[produto_vendido]%></td>
                 </tr>
             <% end %>
             </tbody>
