@@ -1,17 +1,17 @@
 == README
 
-*Aplicação Gateway  - desenvolvido como exemplo para Trabalho de Conclusão de Curso.
+* Aplicação Gateway  - desenvolvido como exemplo para Trabalho de Conclusão de Curso.
 
-*Fornece respostas do sistema de Venda de Produtos, utilizando os Microsserviços via API REST (JSON).
+* Fornece respostas do sistema de Venda de Produtos, utilizando os Microsserviços via API REST (JSON).
 
-*Ruby version: ruby 2.1.1p76 
+* Ruby version: ruby 2.1.1p76 
 
-*Rails version: Rails 4.2.6
+* Rails version: Rails 4.2.6
 
-*System dependencies: gem http, SQLite3.
+* System dependencies: gem http, SQLite3.
 
-*Configuration: rake bundle install
+* Configuration: rake bundle install
 
-*Database creation: rake db:migrate
+* Database creation: rake db:migrate
 
-*Database initialization: rake db:seed
+* Database initialization: rake db:seed
